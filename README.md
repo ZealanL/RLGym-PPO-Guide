@@ -242,7 +242,7 @@ The golden value for this seems to be near `0.01`.
 Bigger values increase how much the policy and critic change during learning. 
 Too small, and you are wasting time. Too big, and the learning gets stuck jittering between different directions, unable to actually progress.
 
-I generally start this high at around, then slowly decrease it as the bot improves. If your bot seems stuck, try decreasing LR. Generally, the better the bot is, the lower the LR should be. 
+I generally start LR high, then slowly decrease it as the bot improves. If your bot seems stuck, try decreasing LR. Generally, the better the bot is, the lower the LR should be. 
 
 Here's what I've found to be ideal at different stages of learning:
 - Brand new bot: `7e-4`
