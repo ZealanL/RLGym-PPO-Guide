@@ -237,8 +237,6 @@ If you aren't using a GPU, this isn't as important. I have no clue what the opti
 
 The golden value for this seems to be near `0.01`.
 
-`gae_gamma`: This is a decay coefficient for how rewards are spread over time. The way this interacts with rewards is complicated, so I won't try to explain it all here.
-
 `policy_lr`/`critic_lr`: The learning rate for the policy and critic. If you have experience in supervised ML, this means the same thing. I recommend keeping them the same unless you know what you're doing.
 
 Bigger values increase how much the policy and critic change during learning. 
