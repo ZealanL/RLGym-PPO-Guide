@@ -3,7 +3,9 @@
 
 This guide will explain how to get started with RLGym-PPO, a very nice and easy-to-use learning framework for making Rocket League bots. I will explain what all of the settings in `example.py` do, and various recommendations.
 
-*DISCLAIMER: The recommendations I will give are based on of my personal experience, as well as some of the experience of other bot creators. My experience is limited to just a few bots, so some things might not apply as well to yours. Experiment and see what works best! That's usually the only way to actually know.*
+*DISCLAIMER: The recommendations I will give are based on of my personal experience, as well as what I have learned from talking to and reading the code of other bot creators. I am definitely no expert, and my experience is limited to just a few bots, so some things might not apply as well to yours. Experiment and see what works best! That's usually the only way to actually know.*
+
+*If you notice a mistake in this guide, let me know!*
 
 ## Installing RLGym-PPO and rlgym-sim:
 Follow the instructions on https://github.com/AechPro/rlgym-ppo/blob/main/README.md.
