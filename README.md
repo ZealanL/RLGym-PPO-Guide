@@ -268,6 +268,13 @@ I also save backups every day or so, because only so many checkpoints are stored
 
 This is not set by default, meaning the bot will not automatically re-load.
 
-It is easy to assume this will just load the most recent checkpoint, but no, it loads a specifically-chosen checkpoint. I recommend you add a little code to load the most recent one, and save yourself the effort.
+It is easy to assume this will just load the most recent checkpoint, but no, it loads a specifically-chosen checkpoint. 
+
+I recommend you add a little code to load the most recent one, and save yourself the effort.
+
+A neat little Python line for getting the name of the most recent checkpoint in a folder (written by Lamp I think?):
+```py
+checkpoint_load_dir = "data/checkpoints/" + str(max(os.listdir("data/checkpoints"), key=lambda d: int(d)))
+````
 
 ## TODO: Add more info on metrics, creating rewards, etc. etc.
