@@ -75,7 +75,7 @@ We'll talk more about this later.
 
 ## Ok, but how does it learn to play RL?
 
-When your bot first starts learning, it has absolutely no idea what is going on. It's brain starts off completely random, so it just mashes random inputs.
+When your bot first starts learning, it has absolutely no idea what is going on. Its brain starts off completely random, so it just mashes random inputs.
 
 In order to get our bot to actually learn something, it needs to have rewards. Rewards are things that happen in the game that you want the bot to do more or less often. The learning algorithm is designed to try to maximize how much reward the bot is getting, while also exploring new ways to get even more rewards.
 
@@ -83,7 +83,7 @@ Rewards can be both positive and negative, and are ultimately just numbers assig
 
 By default, your bot has 3 rewards:
  - `VelocityPlayerToBallReward()`: Positive reward for moving towards the ball, negative reward for moving away
- - `VelocityBallToGoalReward()`: Positive for having the ball move towards the opponents goal, negative reward for having the ball move towards your own goal
+ - `VelocityBallToGoalReward()`: Positive for having the ball move towards the opponent's goal, negative reward for having the ball move towards your own goal
  - `EventReward()`: Positive reward for scoring, negative reward for conceding (getting scored on), and a smaller reward for getting a demo
 
 *You can find these rewards in `example.py`.*
@@ -99,7 +99,7 @@ A lot of the difficulty of making a bot is creating rewards that encourage the b
 
 Also, for future reference, when I say **resetting the bot**, I mean resetting all learning back to nothing. Resetting the bot is a good choice for a number of reasons, and usually occurs when the bot is not improving, or a significant change needs to be made that would break the current bot.
 
-## Diving in to actually modifying our bot
+## Diving into actually modifying our bot
 
 So, now that you know some of the fundamental ideas, lets start actually messing with stuff.
 
@@ -136,7 +136,7 @@ These numbers are the weights of each reward, which is how intensely they will i
 
 **Event-type rewards** are rewards that activate once when a specific thing happens. They are usually important game events, like hitting the ball, shooting, scoring, etc, and so on.
 
-**Continuous-type rewards** are rewards that active *while* something is happening, and thus can run for many steps in a row. Since they happen so often, they are inherently stronger than event rewards, and usually should have far less weight.
+**Continuous-type rewards** are rewards that are active *while* something is happening, and thus can run for many steps in a row. Since they happen so often, they are inherently stronger than event rewards, and usually should have far less weight.
 
 `VelocityPlayerToBallReward` and `VelocityBallToGoalReward` are continuous rewards, whereas `EventReward` is.. well.. yeah.
 
@@ -145,7 +145,7 @@ Inside the constructor to `EventReward()` are sub-weights for different events. 
 All rewards are eventually normalized in the learning algorithm (unless you specifically turn that off, which you probably shouldn't). This means that what actually matters is how rewards are weighted *in relation* to other rewards.
 
 I recommend that you:
-- Increase `VelocityPlayerToBallReward` a bit (its very important in the early stages)
+- Increase `VelocityPlayerToBallReward` a bit (it's very important in the early stages)
 - Add `FaceBallReward` with a small weight (this will reward your bot for facing the ball, which is very helpful in the early stages of learning)
 
 ### Obs builder
@@ -183,7 +183,7 @@ The `NoTouchTimeoutCondition` ends the episode if no player has touched the ball
 
 ## Learner settings
 
-Next we will cover most of the settings for the `Learner`. The `Learner` is a Python class that runs all of the learning loop, and it has a ton of settings for all sorts of things related to the learning process.
+Next, we will cover most of the settings for the `Learner`. The `Learner` is a Python class that runs all of the learning loop, and it has a ton of settings for all sorts of things related to the learning process.
 
 Some of these settings are already being overridden in `example.py`, but many of them are not. To see all of them, open up `rlgym-ppo/learner.py` and look at the constructor (`def __init__(...`).
 
@@ -203,7 +203,7 @@ You will turn this on when you want to watch your bot play, but don't leave it o
 
 `policy_layer_sizes`: How big your bot's **policy** is. 
 
-Each number is the width of a layer of neurons. By default there are 3 layers, each with 256 neurons.
+Each number is the width of a layer of neurons. By default, there are 3 layers, each with 256 neurons.
 
 I haven't mentioned this yet for simplicity, but the learning algorithm actually uses two neural networks: a **policy** that actually plays the game, and a **critic** that predicts how much reward the policy will get.
 
@@ -225,11 +225,11 @@ If you change this, you need to reset the critic. However, the critic doesn't pl
 
 `ppo_epochs`: This is how many times the learning phase is repeated on the same batch of data. I recommend 2 or 3. 
 
-Play around with this and see what learns the fastest. Increasing this will lower your SPS because the learning step is repeating multiple times, but you will get better learning up until a certain point. When testing, compare increase in rewards from a common starting point, not SPS.
+Play around with this and see what learns the fastest. Increasing this will lower your SPS because the learning step is repeating multiple times, but you will get better learning up until a certain point. When testing, compare the increase in rewards from a common starting point, not SPS.
 
-`ppo_batch_size`: Just set this to `ts_per_iteration`. This is the amount of data that the learing algorithm trains on each iteration.
+`ppo_batch_size`: Just set this to `ts_per_iteration`. This is the amount of data that the learning algorithm trains on each iteration.
 
-`ppo_minibatch_size`: This should be a small portion of `ppo_batch_size`, I recommend `25_000` or `50_000`. Data will be split into chunks of these size to conserve VRAM (your gpu's memory). This does not affect anything other than how fast the learning phase runs. Mess around and see what gives you the highest SPS.
+`ppo_minibatch_size`: This should be a small portion of `ppo_batch_size`, I recommend `25_000` or `50_000`. Data will be split into chunks of these size to conserve VRAM (your GPU's memory). This does not affect anything other than how fast the learning phase runs. Mess around and see what gives you the highest SPS.
 
 If you aren't using a GPU, this isn't as important. I have no clue what the optimal value is for CPU learning. I'd guess something very big (RAM is usually bigger than VRAM), or something quite small (CPU cache size).
 
