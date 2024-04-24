@@ -233,7 +233,7 @@ Play around with this and see what learns the fastest. Increasing this will lowe
 
 If you aren't using a GPU, this isn't as important. I have no clue what the optimal value is for CPU learning. I'd guess something very big (RAM is usually bigger than VRAM), or something quite small (CPU cache size).
 
-`entropy`: Entropy fights against learning to make your bot pick actions more randomly. This is useful because it forces the bot to try a larger variety of actions in all situations, which leads to better exploration.
+`ent_coef`: This is the scale factor for entropy. Entropy fights against learning to make your bot pick actions more randomly. This is useful because it forces the bot to try a larger variety of actions in all situations, which leads to better exploration.
 
 The golden value for this seems to be near `0.01`.
 
