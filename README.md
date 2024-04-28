@@ -7,6 +7,14 @@ This guide will explain how to get started with RLGym-PPO, a very nice and easy-
 
 *If you notice a mistake in this guide, let me know!*
 
+## Prerequisites
+This guide assumes you have some basic Python experience. If you are coming from another language, that's fine too, but you might need to google some basic stuff and watch a few tutorials along the way.
+I won't hand-hold basic Python tasks like adding an import or making a function, nor will I explain what an argument or constructor is. If you don't know, google it!
+
+This guide also assumes you know the basics of Rocket League. If you don't know what Rocket League is, I have no idea how you got here.
+
+You don't need any prior experience in machine learning, and this guide will assume you don't. If you already know some of the things I will explain, feel free to skip ahead.
+
 ## Installing RLGym-PPO and rlgym-sim:
 Follow the instructions on https://github.com/AechPro/rlgym-ppo/blob/main/README.md.
 If you have an NVIDIA GPU, you should definitely install PyTorch with GPU support, because it will greatly speed up training.
@@ -22,7 +30,7 @@ This will start training the bot, and will report its results to *wandb*, a data
 ## The basics of the training loop
 Training is a process of:
  - **Collection**: The bot collects data from the environment (i.e. the bot plays the game at super-speed). Each data point during gameplay is called a **step**.
- - **Learning**: The learning algorithm uses those collected steps to update the brain of the bot
+ - **Learning**: The learning algorithm uses those collected steps to update the brain of the bot.
 
 Every time this cycle of learning happens it is called an **iteration**. After each iteration, the bot will print out a report, which will look something like this:
 
