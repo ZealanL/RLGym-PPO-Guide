@@ -183,8 +183,6 @@ The `NoTouchTimeoutCondition` ends the episode if no player has touched the ball
 
 ## Next: Learner Settings
 
-This section explains most of the settings for the learner:
-
----> [learner_settings.md](learner_settings.md)
+This section explains most of the settings for the learner: [learner_settings.md](learner_settings.md)
 
 ### TODO: Add more info on metrics, creating rewards, etc. etc.
