@@ -181,8 +181,21 @@ These are a set of conditions that define when episodes end. If any of these con
 
 The `NoTouchTimeoutCondition` ends the episode if no player has touched the ball for a certain amount of time (10 seconds by default). This is helpful, especially in the early stages, and prevents you from wasting time collecting a ton of data on two motionless bots who aren't doing anything or are stuck upside-down.
 
+### State setters
+
+Once the game is terminal, it needs to be reset. By default, it will be reset to kickoff.
+
+However, for beginner bots, kickoff is usually not the best state setter. 
+
+I recommend using the `RandomState` state setter, especially in the early stages of training. 
+Its constructor takes 3 arguments: `ball_rand_speed`, `cars_rand_speed`, and `cars_on_ground`. 
+I recommend you use `(True, True, False)`, as this will make the cars and ball start at a random location with random velocities. 
+The cars will also spawn airborne half of the time, meaning they will quickly learn how to somewhat orient themselves in the air, too.
+
+The state setter is an argument of `rlgym_sim.make()`, within your `build_rocketsim_env()`.
+
 ## Next: Learner Settings
 
-This section explains most of the settings for the learner: [learner_settings.md](learner_settings.md)
+This section explains most of the settings for the learner itself: [learner_settings.md](learner_settings.md)
 
 ### TODO: Add more info on metrics, creating rewards, etc. etc.
