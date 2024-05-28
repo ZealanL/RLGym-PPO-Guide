@@ -63,7 +63,7 @@ else:
     return 0
 ```
 
-Here use `on_ground`, a field of a player (players are `PlayerData`).
+Here I use `on_ground`, a field of a player (players are `PlayerData`).
 You can browse the other player fields in `PlayerData`'s source code, here: https://github.com/AechPro/rocket-league-gym-sim/blob/main/rlgym_sim/utils/gamestates/player_data.py
 
 Note that all reward functions need to have:
