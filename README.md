@@ -204,8 +204,8 @@ The state setter is an argument of `rlgym_sim.make()`, within your `build_rocket
 
 ## Next Sections:
 
-**Learner Settings**: This section explains most of the settings for the learner itself: [learner_settings.md](learner_settings.md)
+[Learner Settings](learner_settings.md) <- *What the various learner settings do*
 
-**Rewards**: This section explains how rewards work, and how to write them: [rewards.md](rewards.md)
+[Rewards](rewards.md) <- *How rewards work, and how to write them*
 
 ### *TODO: Add more info on metrics, etc.*
