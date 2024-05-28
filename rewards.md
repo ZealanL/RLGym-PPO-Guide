@@ -29,7 +29,7 @@ from rlgym_sim.utils.gamestates import GameState, PlayerData # Import game state
 Here, we will look at an example reward function that rewards the player for being in the air.
 
 ```py
-class GroundedPenalty(RewardFunction): # We extend the class "RewardFunction"
+class InAirReward(RewardFunction): # We extend the class "RewardFunction"
     # Empty default constructor (required)
     def __init__(self):
         super().__init__()
