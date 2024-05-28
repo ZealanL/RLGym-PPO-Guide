@@ -54,7 +54,7 @@ class GroundedPenalty(RewardFunction): # We extend the class "RewardFunction"
 ```
 
 The actual reward logic here for the in-air reward is pretty simple:
-```
+```py
 if not player.on_ground:
     # We are in the air! Return full reward
     return 1
@@ -81,52 +81,52 @@ Now we will move on to a more advanced reward, involving the ball.
 
 We want our player to hit the ball, so we will reward it for having speed in the direction of the ball.
 
-```
+```py
 # Import CAR_MAX_SPEED from common game values
 from rlgym_sim.utils.common_values import CAR_MAX_SPEED
 
 class SpeedTowardBallReward(RewardFunction):
-	# Default constructor
+    # Default constructor
     def __init__(self):
         super().__init__()
 
-	# Do nothing on game reset
+    # Do nothing on game reset
     def reset(self, initial_state: GameState):
         pass
 
-	# Get the reward for a specific player, at the current state
+    # Get the reward for a specific player, at the current state
     def get_reward(self, player: PlayerData, state: GameState, previous_action: np.ndarray) -> float:
         # Velocity of our player
-		player_vel = player.car_data.linear_velocity
+        player_vel = player.car_data.linear_velocity
         
-		# Difference in position between our player and the ball
-		# When getting the change needed to reach B from A, we can use the formula: (B - A)
-		pos_diff = (state.ball.position - player.car_data.position)
-		
-		# Determine the distance to the ball
-		# The distance is just the length of pos_diff
-		dist_to_ball = np.linalg.norm(pos_diff)
-		
-		# We will now normalize our pos_diff vector, so that it has a length/magnitude of 1
-		# This will give us the direction to the ball, instead of the difference in position
-		# Normalizing a vector can be done by dividing the vector by its length
+        # Difference in position between our player and the ball
+        # When getting the change needed to reach B from A, we can use the formula: (B - A)
+        pos_diff = (state.ball.position - player.car_data.position)
+        
+        # Determine the distance to the ball
+        # The distance is just the length of pos_diff
+        dist_to_ball = np.linalg.norm(pos_diff)
+        
+        # We will now normalize our pos_diff vector, so that it has a length/magnitude of 1
+        # This will give us the direction to the ball, instead of the difference in position
+        # Normalizing a vector can be done by dividing the vector by its length
         dir_to_ball = pos_diff / dist_to_ball
 
-		# Use a dot product to determine how much of our velocity is in this direction
-		# Note that this will go negative when we are going away from the ball
-		speed_toward_ball = np.dot(player_vel, dir_to_ball)
-		
-		if speed_toward_ball > 0:
-			# We are moving toward the ball at a speed of "speed_toward_ball"
-			# The maximum speed we can move toward the ball is the maximum car speed
-			# We want to return a reward from 0 to 1, so we need to divide our "speed_toward_ball" by the max player speed
-			reward = speed_toward_ball / CAR_MAX_SPEED
-			return reward
-		else:
-			# We are not moving toward the ball
-			# Many good behaviors require moving away from the ball, so I highly recommend you don't punish moving away
-			# We'll just not give any reward
-			return 0
+        # Use a dot product to determine how much of our velocity is in this direction
+        # Note that this will go negative when we are going away from the ball
+        speed_toward_ball = np.dot(player_vel, dir_to_ball)
+        
+        if speed_toward_ball > 0:
+            # We are moving toward the ball at a speed of "speed_toward_ball"
+            # The maximum speed we can move toward the ball is the maximum car speed
+            # We want to return a reward from 0 to 1, so we need to divide our "speed_toward_ball" by the max player speed
+            reward = speed_toward_ball / CAR_MAX_SPEED
+            return reward
+        else:
+            # We are not moving toward the ball
+            # Many good behaviors require moving away from the ball, so I highly recommend you don't punish moving away
+            # We'll just not give any reward
+            return 0
 ```
 
 *NOTE: From my testing, the `SpeedTowardBallReward` above is better than the default `VelocityPlayerToBallReward`, because it does not go negative.*
@@ -169,7 +169,7 @@ Thankfully, `CombinedReward` has a static function called `from_zipped()`, which
 
 reward_fn = CombinedReward.from_zipped(
     # Format is (func, weight)
-	(InAirReward(), 0.002),
+    (InAirReward(), 0.002),
     (SpeedTowardBallReward(), 0.01),
     (VelocityBallToGoalReward(), 0.1),
     (EventReward(team_goal=1, concede=-1, demo=0.1), 10.0)
