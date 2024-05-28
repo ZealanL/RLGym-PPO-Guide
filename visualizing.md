@@ -4,8 +4,8 @@ This short section will explain how to watch your bot play the game.
 
 ## What's a visualizer?
 
-Since we are training in `rlgym_sim` which uses RocketSim, a simulated version of Rocket League, the actual game isn't running.
-So, if we actually want to watch our bot, we need a program that can render gamestates in 3D so we can watch what is going on.
+RLGym-PPO uses rlgym-sim, which simulates Rocket League games using uses RocketSim, the actual game isn't running.
+So, if we want to watch our bot, we need a program that can render Rocket League gamestates in 3D.
 
 Such programs for rendering RocketSim games are called **visualizers**.
 
