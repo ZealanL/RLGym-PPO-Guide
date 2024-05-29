@@ -17,6 +17,7 @@ You shouldn't use vague graphs (like policy reward) to come to vague conclusions
 However, if a general graph completely dies or skyrockets to an insane value, something *is* probably broken. Just don't solely rely on the graphs to determine if there is a problem unless it's very obvious.
 
 ## Policy Reward
+![image](https://github.com/ZealanL/RLGym-PPO-Guide/assets/36944229/cb480e81-38c4-488e-9b2a-f563257ef7ca)
 
 This graph shows the average of the total reward each player gets, per episode.
 
@@ -33,10 +34,12 @@ Note that if you are using zero-sum rewards, this graph is basically useless, as
 However, since zero-sum rewards are not helpful when the bots can't really reach the ball yet, this is still useful for tracking the progress of early learning.
 
 ## Policy Entropy
+![image](https://github.com/ZealanL/RLGym-PPO-Guide/assets/36944229/a3974e70-30ae-4cb2-9cf6-3fad02a09fb3)
 
 This one's pretty cool. It shows how much variety there is in the actions of your bot, on average. This graph will directly scale with `ent_coef`, as well as what situations the bot is in.
 
 ## Value Function Loss
+![image](https://github.com/ZealanL/RLGym-PPO-Guide/assets/36944229/832d5b31-3bef-4551-ad8e-8dfed9d90d45)
 
 This graph shows how much the critic is struggling to predict the rewards of the policy. 
 The graph scales pretty consistently with how often event rewards (goals, demos, etc.) occur, as they are extremely difficult (and in many cases straight-up impossible) for the critic to predict in the future.
@@ -46,10 +49,12 @@ It should decrease a lot at the very beginning, but then settle down to a "best 
 You will also see this graph immediately shift if you make significant changes to your rewards.
 
 ## Policy Update Magnitude/Value Function Update Magnitude
+![image](https://github.com/ZealanL/RLGym-PPO-Guide/assets/36944229/d8726d44-dd0b-42a4-92dc-c0695adb03b7)
 
 These are the scale of changes made to the policy and critic each iteration. These directly scale with learning rate, and they both tend to immediately spike or shift with significant reward changes.
 
 ## SB3 Clip Fraction/Mean KL Divergence
+![image](https://github.com/ZealanL/RLGym-PPO-Guide/assets/36944229/ebca338e-bd0b-407a-b5cc-3f4539a54301)
 
 These scale with the change in the policy each iteration (see "Policy Update Magnitude"). 
 Many bot creators will adjust learning rate to keep one of these graphs near a certain value (I usually see people targeting ~0.08 as their clip fraction).
