@@ -176,4 +176,71 @@ reward_fn = CombinedReward.from_zipped(
 )
 ```
 
+## Zero-sum rewards
+
+> :warning: *This section is a W.I.P. and needs more review!* :warning:
+
+If you are rewarding a player for doing something is good, it only makes sense to equally punish the opponent.
+
+Every good bot I have seen has used zero-sum rewards, either partially or completely.
+
+A zero-sum reward can be implemented with the following logic: `player_reward = self_reward - opponent_reward`
+
+### To zero-sum, or not to zero-sum
+
+Some bot creators make every reward zero-sum, but I believe this is overkill, and from my testing, making certain rewards zero-sum slows down learning.
+
+Based on this testing, my philosophy is the following: **A reward should only be zero-sum if it is beneficial for the opponent to prevent it.**
+
+Examples of things that the opponent should be trying to prevent:
+- Bumps/demos
+- Flip resets
+- Strong powershots
+- Collecting boost
+- Having speed
+
+Examples of rewards that the opponent shouldn't worry about preventing as much:
+- Speed flips
+- Air roll in air
+- Air reward/ground penalty
+
+Most rewards tend to benefit from being zero-sum, but some rewards, such as those for gameplay/movement tuning, shouldn't be.
+
+If a reward is zero-sum that shouldn't be, it will add noise to the overall reward of every player. 
+This noise makes other reward signals weaker and will slow down learning.
+
+I also recommend not using zero-sum rewards on specific behaviors like flip resets until your bot is skilled enough to start defending against them.
+
+### Team rewards and "team spirit"
+
+Another thing zero-sum rewards do is distribute rewards between teammates.
+
+If you are training a bot in a team mode, and not using zero-sum rewards, you may notice the bot fighting over the ball with its teammates.
+This obviously is not good teamplay!
+
+The solution is to share reward among teammates.
+
+Team spirit systems do this through a setting called `team_spirit`, which ranges from 0 to 1.
+
+At `team_spirit = 0`, no reward is shared between teammates.
+At `team_spirit = 1`, all reward is shared between teammates, with each player's reward being the average of their teams.
+
+When training a bot, you generally want to start `team_spirit` very low, and slowly increase it as the bot improves, until it reaches `1`.
+
+Having high team spirit too early in training will greatly slow down learning. 
+This is because early learning mostly focuses on individual behaviors, not team ones.
+
+Adding team spirit to zero-sum reward logic gives us this:
+```py
+avg_team_reward = ... # Average reward of everyone on our team (including us)
+
+avg_opp_reward = ... # Average reward of all opponents
+
+# As team spirit increases, our own reward will be replaced by our team's average reward
+# After that, we then just subtract the average opponent reward
+player_reward = (self_reward * (1 - team_spirit)) + (avg_team_reward * team_spirit) - average_opp_reward
+```
+
+__
+
 ### *TODO: Add sections explaining more complex rewards, explain returns, etc.*
