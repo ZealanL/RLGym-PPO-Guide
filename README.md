@@ -210,4 +210,6 @@ The state setter is an argument of `rlgym_sim.make()`, within your `build_rocket
 
 [Visualizing Your Bot](visualizing.md) <- *How to watch your bot play in a visualizer*
 
+[Understanding The Graphs](graphs.md) <- *What the metric graphs mean*
+
 ### *TODO: Add more info on metrics, etc.*
