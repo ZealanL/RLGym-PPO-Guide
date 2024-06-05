@@ -29,7 +29,7 @@ The critic learns to predict the reward the policy will get in a given situation
 
 The default policy size is quite small, I would highly recommend increasing both policy and critic size until you start losing a ton of SPS (steps per second). In general, a bigger policy and critic will learn better.
 
-My computer (with a GTX 3060 ti) seems to run best on a policy/critic size of `[2048, 2048, 1024, 1024]`. More than that, and my SPS tanks. If you aren't using a GPU, your CPU is going to take ages to run a large network, so you might need to stick with a smaller one.
+My computer (with a RTX 3060 ti) seems to run best on a policy/critic size of `[2048, 2048, 1024, 1024]`. More than that, and my SPS tanks. If you aren't using a GPU, your CPU is going to take ages to run a large network, so you might need to stick with a smaller one.
 
 If you change this, you will need to reset your bot.
 ___
