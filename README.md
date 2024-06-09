@@ -1,9 +1,9 @@
 
-# Making your first Rocket League ML bot using RLGym-PPO
+# Making your first Rocket League ML bot using rlgym-ppo
 
-This guide will explain how to get started with RLGym-PPO, a very nice and easy-to-use learning framework for making Rocket League bots. I will explain what all of the settings in `example.py` do, and various recommendations.
+This guide will explain how to get started with rlgym-ppo, a very nice and easy-to-use learning framework for making Rocket League bots. I will explain what all of the settings in `example.py` do, and various recommendations.
 
-*DISCLAIMER: The recommendations I will give are based on my personal experience, as well as what I have learned from talking to and reading the code of other bot creators. I am definitely no expert, and my experience is limited to just a few bots. Furthermore, no piece of advice can apply to all bots, and while I will do my best to give general sentiments, some may not apply perfectly (or at all) to your bot. Experiment and see what works best! That's the only way to truly know.*
+*DISCLAIMER: The recommendations I will give are based on my personal experience, as well as what I have learned from talking to and reading the code of other bot creators. I am definitely no expert, and my experience is limited to just a few bots. Furthermore, no piece of advice can apply to all bots, and while I will do my best to give general sentiments, some may not apply perfectly (or at all) to your bot. Experiment and see what works best! That's usually the only way to truly know.*
 
 *Also, if you notice a mistake in this guide, let me know!*
 
@@ -14,24 +14,24 @@ This guide also assumes you know the basics of Rocket League. If you don't know 
 
 You don't need any prior experience in machine learning, and in fact this guide will assume that you don't. If you already know a concept I explain, feel free to skip ahead.
 
-## Installing RLGym-PPO and RLGym-Sim
+## Installing rlgym-ppo and rlgym-sim
 Follow the instructions on https://github.com/AechPro/rlgym-ppo/blob/main/README.md.
 If you have an NVIDIA GPU, you should definitely install PyTorch with GPU support, because it will greatly speed up training.
 
 ### Wait where is Rocket League involved?
-RLGym-PPO uses RLGym-Sim, which is a version of RLGym that runs on a simulated version of Rocket League, called RocketSim (far more often stylized as rocketsim), without actually running the game itself. This means that you can use RLGym-PPO on non-windows platforms, without needing Rocket League, and can also collect data from the game much faster.
+rlgym-ppo uses rlgym-sim, which is a version of RLGym that runs on a simulated version of Rocket League, called rocketsim, without actually running the game itself. This means that you can use rlgym-ppo on non-windows platforms, without needing Rocket League, and can also collect data from the game much faster.
 
 ## Actually running your bot
-Once you have installed RLGym-PPO, you can run your bot by running `example.py`.
+Once you have installed rlgym-ppo, you can run your bot by running `example.py`.
 
-This will start training the bot, and will report its results to *WandB* (Weights and Biases), a data platform you can use to view graphs of various statistics as your bot trains. It will also print out a large list of information into the console, which I will elaborate on in the next section.
+This will start training the bot, and will report its results to *wandb* (Weights and Biases), a data platform you can use to view graphs of various stats as your bot trains. It will also print out a large list of information into the console, which I will elaborate on in the next section.
 
 ## The basics of the training loop
 Training is a process of:
  - **Collection**: The bot collects data from the environment (i.e. the bot plays the game at super-speed). Each data point during gameplay is called a **step** (or, as it will often be referred to throughout this guide, a **timestep**). More information on steps will be covered later.
  - **Learning**: The learning algorithm uses those collected steps to update the brain of the bot. Being RLGym-**PPO**, the learning algorithm is Proximal Policy Optimization (PPO).
 
-Each time this cycle of learning repeats it is called an **iteration**. After each iteration, the bot will print out a report, which will look something like this:
+Each cycle of this training process is called an **iteration**. After each iteration, the bot will print out a report, which will look something like this:
 
 ```
 --------BEGIN ITERATION REPORT--------
@@ -59,7 +59,7 @@ Timesteps Collected: 50,006
 --------END ITERATION REPORT--------
 ```
 
-Some of these terms are quite complicated and require a far deeper dive into ML than is within the purview of this guide, so I'll only cover the simpler ones.
+Some of these stats are quite complicated and require knowledge of ML, so I'll only cover the simpler ones.
 
 `Policy Reward`: This is how much reward the bot collected, on average, in each **episode**. An **episode** is a small piece of gameplay that ends once a certain condition is met, such as a goal being scored.
 
@@ -152,7 +152,7 @@ All rewards are eventually normalized in the learning algorithm (unless you spec
 
 I recommend that you:
 - Increase `VelocityPlayerToBallReward` a bit (it's very important in the early stages)
-- Add a `FaceBallReward` with a small weight (this will reward your bot for facing the ball, which is very helpful during early learning)
+- Add `FaceBallReward` with a small weight (this will reward your bot for facing the ball, which is very helpful during the early stages of learning)
 
 ### Obs builder
 
@@ -160,7 +160,7 @@ I recommend that you:
 
 The default obs builder is a decent starting point. I've found you can get moderately better results if you add car-relative positions and velocities, but that's a bit more advanced.
 
-Making obs builders is quite tedious, and also very very high-risk. If you slightly mess something up, it could make your bot unable to play the game, or even worse, play the game but poorly (a very insidious genre of bug, because it can be very difficult to tell that something is wrong).
+Making obs builders is quite tedious, and also very very high-risk. If you slightly mess something up, it could make your bot unable to play the game, or even worse, play the game but poorly (an annoying type of bug that makes it difficult to tell when something is wrong).
 
 Since the obs defines the input to your bot's brain, changing obs usually means resetting the bot.
 
@@ -195,7 +195,7 @@ However, for beginner bots, kickoff is usually not the best state setter.
 
 I recommend using the `RandomState` state setter, especially in the early stages of training. 
 Its constructor takes 3 arguments: `ball_rand_speed`, `cars_rand_speed`, and `cars_on_ground`. 
-I recommend you use `(True, True, False)`, as this will make the cars and ball start at a random location with a random velocity. 
+I recommend you use `(True, True, False)`, as this will make the cars and ball start at random locations with a random velocities. 
 The cars will also spawn airborne half of the time, meaning they will quickly learn how to orient themselves in the air with some level of competency.
 
 The state setter is an argument of `rlgym_sim.make()` within your `build_rocketsim_env()`.
