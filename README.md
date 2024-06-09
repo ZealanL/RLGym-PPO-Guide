@@ -114,7 +114,7 @@ If you haven't already, open `example.py` in the Python editor of your choice.
 ### Action parser
 
 The first thing I recommend changing is the action parser.
-This is set with this line:
+This is set at the line:
 
 ```python
 action_parser = ContinuousAction()
