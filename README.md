@@ -1,9 +1,9 @@
 
 # Making your first Rocket League ML bot using rlgym-ppo
 
-This guide will explain how to get started with rlgym-ppo, a very nice and easy-to-use learning framework for making Rocket League bots. I will explain what all of the settings in `example.py` do, and various recommendations.
+This guide will explain how to get started with rlgym-ppo, a very nice and easy-to-use learning framework for making Rocket League bots. I will explain what all of the settings in `example.py` do, and give various recommendations.
 
-*DISCLAIMER: The recommendations I will give are based on my personal experience, as well as what I have learned from talking to and reading the code of other bot creators. I am definitely no expert, and my experience is limited to just a few bots. Furthermore, no piece of advice can apply to all bots, and while I will do my best to give general sentiments, some may not apply perfectly (or at all) to your bot. Experiment and see what works best! That's usually the only way to truly know.*
+**DISCLAIMER:** *The recommendations I will give are based on my personal experience and what I have learned from talking to other bot creators. I am definitely not an expert, and my personal experience is limited to just a few bots. Also, no piece of advice can apply to all bots, and while I will do my best to give general advice, some of it may not apply perfectly (or at all) to your bot. Experiment and see what works best! That's usually the only way to truly know.*
 
 *Also, if you notice a mistake in this guide, let me know!*
 
@@ -12,19 +12,19 @@ This guide assumes you have some basic Python experience. If you are coming from
 
 This guide also assumes you know the basics of Rocket League. If you don't know what Rocket League is, I have no idea how you got here.
 
-You don't need any prior experience in machine learning, and in fact this guide will assume that you don't. If you already know a concept I explain, feel free to skip ahead.
+You don't need any prior experience in machine learning, and this guide will assume that you don't. If you already know a concept I explain, feel free to skip ahead.
 
 ## Installing rlgym-ppo and rlgym-sim
 Follow the instructions on https://github.com/AechPro/rlgym-ppo/blob/main/README.md.
 If you have an NVIDIA GPU, you should definitely install PyTorch with GPU support, because it will greatly speed up training.
 
 ### Wait where is Rocket League involved?
-rlgym-ppo uses rlgym-sim, which is a version of RLGym that runs on a simulated version of Rocket League, called rocketsim, without actually running the game itself. This means that you can use rlgym-ppo on non-windows platforms, without needing Rocket League, and can also collect data from the game much faster.
+rlgym-ppo uses rlgym-sim, which is a version of RLGym that runs on a simulated version of Rocket League, called RocketSim, without actually running the game itself. This means that you can use rlgym-ppo on non-Windows platforms, without needing Rocket League, and can also collect data from the game much faster.
 
 ## Actually running your bot
 Once you have installed rlgym-ppo, you can run your bot by running `example.py`.
 
-This will start training the bot, and will report its results to *wandb* (Weights and Biases), a data platform you can use to view graphs of various stats as your bot trains. It will also print out a large list of information into the console, which I will elaborate on in the next section.
+This will start training the bot, and will report its results to WandB (Weights and Biases), a data platform you can use to view graphs of various stats as your bot trains. It will also print out a large list of information into the console, which I will elaborate on in the next section.
 
 ## The basics of the training loop
 Training is a process of:
@@ -114,13 +114,13 @@ If you haven't already, open `example.py` in the Python editor of your choice.
 ### Action parser
 
 The first thing I recommend changing is the action parser.
-This is set at the line:
+This is set with this line:
 
 ```python
 action_parser = ContinuousAction()
 ```
 
-**Continuous actions** mean the bot can use any partial input, which allows for more precise input. However, this is more difficult to use, and I do not recommend it as your first action parser.
+**Continuous actions** mean the bot can use any partial input (e.g. `throttle = 0.4`, `steer = -0.9`, etc. rather than only a choice of `0` or `1`), which allows for more precise input. However, this is more difficult to use, and I do not recommend it as your first action parser.
 
 An **action** is the combination of controller inputs the bot presses (throttle, steer, jump, boost, etc.), and an action parser converts the outputs of the bot's brain into these controller inputs.
 
