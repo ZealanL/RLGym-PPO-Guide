@@ -29,7 +29,7 @@ This will start training the bot, and will report its results to WandB (Weights 
 ## The basics of the training loop
 Training is a process of:
  - **Collection**: The bot collects data from the environment (i.e. the bot plays the game at super-speed). Each data point during gameplay is called a **step** (or, as it will often be referred to throughout this guide, a **timestep**). More information on steps will be covered later.
- - **Learning**: The learning algorithm uses those collected steps to update the brain of the bot. Being RLGym-**PPO**, the learning algorithm is Proximal Policy Optimization (PPO).
+ - **Learning**: The learning algorithm uses those collected steps to update the brain of the bot.
 
 Each cycle of this training process is called an **iteration**. After each iteration, the bot will print out a report, which will look something like this:
 
