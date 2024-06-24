@@ -77,7 +77,7 @@ We'll talk more about this later.
 
 `Timestep Consumption Time`: How long it took to "consume" (organize and learn from) all of those steps.
 
-`Timesteps Collected`: This is the total number of steps collected during your bot's lifetime. If you plan on making a good bot, expect to see numbers in the tens of billions someday!
+`Cumulative Timesteps`: This is the total number of steps collected during your bot's lifetime. If you plan on making a good bot, expect to see numbers in the tens of billions someday!
 
 *Fun fact: If your bot steps 15 times a second, 1 billion steps is ~18,500 hours of Rocket League. Bots do not go outside.*
 
