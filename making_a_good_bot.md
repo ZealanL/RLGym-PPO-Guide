@@ -229,3 +229,10 @@ You can define the concede reward using `aggression_bias` like so: `concede_rewa
 
 I generally use an `aggression_bias` of around `0.2` in my bots, but I frequently change it depending on how aggressive the bot is playing.
 If the `aggression_bias` isn't enough, you may want to add strong rewards for challenging a play, and a penalty for there being no player on a given team near the ball.
+
+## Letting it cook
+
+In these later stages, it is more important to allow the bot to slowly explore and improve on its own.
+Sometimes, you will see no changes on the graphs, but that often means it is slowly improving at everything instead of changing how it plays.
+
+A good amount of patience is required to get a high-level bot.
