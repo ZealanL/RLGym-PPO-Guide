@@ -3,17 +3,19 @@
 > :warning: *This section is a W.I.P. and needs more review!* :warning:
 
 While most of this guide explains how to make a bot, this section is specifically intended to teach you how to make a *good* bot.
+This is, of course, my personal experience as well as what I have learned from testing and speaking with other bot creators.
+*If you believe some part of this section is wrong or misleading, please let me know so I can fix it!*
 
-This section aims to provide enough general and specific guidance to allow a decicated bot creator to train a bot from nothing to GC.
+This section aims to provide enough general and specific guidance to allow a dedicated bot creator to train a bot from nothing to GC.
 
 I will be referencing the [rewards section](rewards.md), [learner settings section](learner_settings.md), and [graphs section](graphs.md) frequently.
 
 # Early Stages (Bronze - Silver)
 
 There are differing opinions on what "early stages" mean, but personally I define the early stages of training as the period of time before your bot is actually trying to score. 
-Bots in early stages cannot yet push or shoot the ball into the goal.
+Bots in the early stages cannot yet push or shoot the ball into the goal.
 
-In this stage, you primarly should focus your bot on these 2 tasks:
+In this stage, you primarily should focus your bot on these 2 tasks:
 1. Learn to touch the ball
 2. Don't forget how to jump
 
@@ -36,7 +38,7 @@ From my testing, here are some good rewards to get a fresh bot to learn to hit t
 rewards = (
 	(EventReward(touch=1), 50), # Giant reward for actually hitting the ball
 	(SpeedTowardBallReward(), 5), # Move towards the ball!
-	(FaceBallReward(), 1), # Make sure we don't start driving backwards at the ball
+	(FaceBallReward(), 1), # Make sure we don't start driving backward at the ball
 	(AirReward(), 1) # Make sure we don't forget how to jump
 )
 # NOTE: SpeedTowardBallReward and AirReward can be found in the rewards section of this guide
@@ -53,7 +55,7 @@ If your bot stops jumping, increase the `AirReward`!
 
 ### Learning to score
 
-Once your bot is capable of hitting the ball, you should introduce rewards for moving the ball to the goal, and scoring.
+Once your bot is capable of hitting the ball, you should introduce rewards for moving the ball to the goal and scoring.
 You should also decrease the `TouchBallReward` a lot so that it is no longer the bot's top priority.
 
 I recommend using `VelocityBallToGoalReward` as the continuous scoring encouragement, it should be a fair bit stronger than `SpeedTowardBallReward`.
@@ -73,17 +75,17 @@ reward = (
 
 **Don't do this!**
 
-This *feels* like it makes sense, because goals are the most important thing in the game.
-However, from my testing and experience, adding massive goal rewards early on in training simply slows down learning and decreases aggression.
+This *feels* like it makes sense because goals are the most important thing in the game.
+However, from my testing and experience, adding massive goal rewards early on in training simply slows down learning and decreases exploration.
 
-A giant goal reward will drown out every other reward you have. Pick a more reasonable weight like `15`, in this instance.
+A giant goal reward will drown out every other reward you have. Pick a more reasonable weight like `20`, in this instance.
 
-I have trained a bot to element level without the use of any goal rewards. It is less necessary than you might expect.
+I have trained a bot to element level without the use of any goal rewards. It is less important than you might expect.
 
 # Middle Stages (Gold - Plat)
 
 Once your bot is capable of pushing the ball into the net, you are now in the "middle stages".
-This stage is more complex, and more difficult to get right.
+This stage is more complex and more difficult to get right.
 
 There are several different things you probably want your bot to learn in this stage:
 - Basic shots
@@ -100,10 +102,10 @@ Also, you'll generally want to decrease LR to around `1e-4` now that you're out 
 ### A better ball-touch reward
 
 The default `touch` part of `EventReward` is not very good once your bot can touch the ball. 
-The reason is because it can easily be farmed by constantly pushing the ball, instead of shooting or cutting it.
+This is because ball touches can easily be farmed by constantly pushing the ball, instead of shooting or cutting it.
 
 A substantial improvement to this reward is to **scale the reward with the strength of the touch**. 
-This will mean that a slight push that barely changes the velocity of the ball will give almost no reward, but a strong shot will give lots of reward.
+This means that a slight push that barely changes the velocity of the ball will give almost no reward, but a strong shot will give lots of reward.
 
 I won't provide a copy-pasteable reward for this, as you should try to write this reward on your own. Here are some hints:
 - `ball_touched` is a property of players, and is `True` if they hit the ball since the previous step
@@ -132,13 +134,13 @@ reward = min(air_time_frac, height_frac)
 
 Bots will sort of discover picking up boost if given enough time, but are generally pretty wasteful once they have it.
 
-I always recommend a general `SaveBoostReward`, which rewards the player simply based on how much boost they have.
+I always recommend a general `SaveBoostReward`, which rewards the player based on how much boost they have.
 ```py
 reward = sqrt(player.boost_amount)
 ```
 
 Note that I am using `sqrt()` here. 
-The `sqrt()` effectively makes boost more important the less you have (within this reward), which is just a true fact of Rocket League. 
+The `sqrt()` effectively makes boost more important the less you have (within this reward), which is just a fact of Rocket League. 
 Going from 0 boost to 50 boost is more useful than going from 50 boost to 100 boost (remember that boost ranges from 0-1 in RLGym stuff).
 
 If your bot is wasting boost, increase the `SaveBoostReward`. If your bot is hogging boost and is afraid to use it, decrease the reward.
@@ -149,11 +151,11 @@ However, bots have a tendency to ignore small pads, so I recommend making the sm
 ### Developing outplays
 
 One of the key skills that will bring your bot into the later stages is the ability to outplay.
-This means having a mechanic that can change the direction of the ball to get past a challenging opponent.
+This means learning a mechanic that can change the direction of the ball to get past a challenging opponent.
 
 The most common way bots do this is with dribbling and flicking, a behavior that comes quite naturally to bots. However, this is not the only way to outplay opponents. 
 Cuts, passes, air dribbles, and flip resets are also very strong outplays--however most of those mechanics typically aren't discovered on their own.
-If there's a particular mechanic you would like your bot to preform to outplay, I recommend creating and adding a reward for that mechanic in these stages.
+If there's a particular mechanic you would like your bot to perform to outplay, I recommend creating and adding a reward for that mechanic in these stages.
 
 # Later Stages (Diamond+)
 
@@ -168,9 +170,9 @@ In the early stages, it is blatantly obvious if your bot is improving or not.
 In the middle stages, it is less obvious, but repeated observation usually makes it clear.
 However, in the later stages, it can be very difficult to tell.
 
-Since the bot is playing against itself, an increase in reward, goals, or most other metrics imply a change in gameplay, but not improvement.
+Since the bot is playing against itself, an increase in reward, goals, or most other metrics do imply a change in gameplay, but not improvement.
 
-Luckily, the PPO learning algorithm is pretty good at its job, and generally doesn't get worse at a task unless you mess something up really bad.
+Luckily, the PPO learning algorithm is pretty good at its job and generally doesn't get worse at a task unless you mess something up really bad.
 However, the learning algorithm is trying to maximize and explore your rewards, not winning. 
 So, if your rewards are farmable in a way that does not improve your bot's skill, your bot will likely get worse at the game.
 
@@ -182,7 +184,7 @@ so you can actually measure how much the bot is improving. I do plan on implemen
 If you want to manually test improvement, you can verse your current bot against an older version and see who comes out on top. 
 If you are doing this in RLBot, you will have to wait a while, as it takes many goals to actually begin to know if the bot is improving.
 
-For my first rlgym-ppo bot I wrote a little python script that used rlgym-sim to run an infinite game between two versions of my bot. 
+For my first rlgym-ppo bot I wrote a little Python script that used rlgym-sim to run an infinite game between two versions of my bot. 
 This could run far faster than real-time (unlike RLBot) so I was quickly able to see if the bot was actually improving as the scoreline rapidly climbed.
 
 ## Nextoification
@@ -212,7 +214,7 @@ This is a flaw you will notice with most bots. They are unwilling to take risks 
 
 I believe there are two main reasons why passiveness is so natural for bots:
 1. Having a faster reaction time makes being passive more viable (you can react faster to threats)
-2. It is simply easier to be passive than to be aggressive, because being aggressive requires more predictive decision making
+2. It is simply easier to be passive than to be aggressive because being aggressive requires more predictive decision-making
 
 Personally, I am not a fan of passiveness in bots. In all of my bots I have taken many steps to encourage and promote riskier, more aggressive play.
 This allowed my bots to discover much stronger plays and defense as a result.
