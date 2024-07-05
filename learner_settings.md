@@ -1,8 +1,10 @@
 # Learner settings
 
-Next, we will cover most of the settings for the `Learner`. The `Learner` is a Python class that runs all of the learning loop, and it has a ton of settings for all sorts of things related to the learning process.
+Next, we will cover most of the settings for the `Learner`. The `Learner` is a Python class that runs all of the learning loop, and it has many settings for all sorts of things related to the learning process.
 
 Some of these settings are already being overridden in `example.py`, but many of them are not. To see all of them, open up `rlgym-ppo/learner.py` and look at the constructor (`def __init__(...`).
+
+⚠️ *Many of the settings set in `example.py` are bad, such as `ent_coef`. Please read about them and change them.*
 
 ___
 `n_proc`: To make learning faster, multiple games are run simultaneously, each in its own Python process. This number controls how many Python processes are launched. I recommend increasing this number until you have max CPU usage, to get the best possible steps/second (you can check in Task Manager on Windows).
@@ -53,7 +55,8 @@ If you aren't using a GPU, this isn't as important. I have no clue what the opti
 ___
 `ent_coef`: This is the scale factor for entropy. Entropy fights against learning to make your bot pick actions more randomly. This is useful because it forces the bot to try a larger variety of actions in all situations, which leads to better exploration.
 
-The golden value for this seems to be near `0.01`.
+The golden value for this seems to be about `0.01`. 
+You can reduce this significantly to cause your bot to stop exploring the game and start refining what it already knows. Don't do this if you plan to continue training your bot after.
 ___
 `policy_lr`/`critic_lr`: The learning rate for the policy and critic. If you have experience in supervised ML, this means the same thing. I recommend keeping them the same unless you know what you're doing.
 
@@ -63,10 +66,9 @@ Too small, and you are wasting time. Too big, and the learning gets stuck jitter
 I generally start LR high, then slowly decrease it as the bot improves. If your bot seems stuck, try decreasing LR. Generally, the better the bot is, the lower the LR should be. 
 
 Here's what I've found to be ideal at different stages of learning:
-- Brand new bot: `7e-4`
-- Bot that can chase the ball around and hit it: `3e-4`
-- Bot that is actually trying to score on its opponent: `2e-4`
-- Bot that is learning outplay mechanics (dribbling and flicking, air dribbles, etc.): `1e-4` or lower
+- Bot that can't score yet: `2e-4`
+- Bot that is actually trying to score on its opponent: `1e-4`
+- Bot that is learning outplay mechanics (dribbling and flicking, air dribbles, etc.): `0.8e-4` or lower
 
 The optimal values for your bot will be different, though. This is a value you should play around with until you find something that seems optimal.
 ___
@@ -86,12 +88,13 @@ ___
 
 This is not set by default, meaning the bot will not automatically re-load.
 
-It is easy to assume this will just load the most recent checkpoint, but no, it loads a specifically-chosen checkpoint. 
+It is easy to assume this will just load the most recent checkpoint, but no, it loads a specifically chosen checkpoint. 
 
-I recommend you add a little code to load the most recent one, and save yourself the effort.
+I recommend you add a little code to load the most recent one and save yourself the effort.
 
 A neat little Python line for getting the name of the most recent checkpoint in a folder (written by Lamp I think?):
 ```py
-checkpoint_load_dir = "data/checkpoints/" + str(max(os.listdir("data/checkpoints"), key=lambda d: int(d)))
+# Note: You MUST disable the "add_unix_timestamp" learner setting for this to work properly
+latest_checkpoint_dir = "data/checkpoints/rlgym-ppo-run/" + str(max(os.listdir("data/checkpoints/rlgym-ppo-run"), key=lambda d: int(d)))
 ````
 ___	
