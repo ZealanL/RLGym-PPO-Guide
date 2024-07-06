@@ -133,7 +133,8 @@ class SpeedTowardBallReward(RewardFunction):
 
 ## Using multiple rewards
 
-The `rlgym_sim` environment requires a single reward function. To allow multiple rewards in a single function, there exists `CombinedReward`. This reward function runs a set of rewards, multiplies each reward by a corresponding weight, and sums them together as the total reward.
+The `rlgym_sim` environment requires a single reward function. To allow multiple rewards in a single function, there exists `CombinedReward`. 
+This reward function runs a set of rewards, multiplies each reward by a corresponding weight, and sums them together as the total reward.
 
 You can see `CombinedReward` is already being used in `example.py` by default:
 ```py
@@ -185,6 +186,8 @@ If you are rewarding a player for doing something is good, it only makes sense t
 Every good bot I have seen has used zero-sum rewards, either partially or completely.
 
 A zero-sum reward can be implemented with the following logic: `player_reward = self_reward - opponent_reward`
+
+My commented implementation of a zero-sum reward wrapper can be found here: [zero_sum_reward.py](code/zero_sum_reward.py)
 
 ### To zero-sum, or not to zero-sum
 
