@@ -10,9 +10,9 @@ learner = Learner(build_rocketsim_env,
                   metrics_logger=metrics_logger,
                   ...
 ```
-Note that only some of the learner settings are being set here. To see all settings, open up `rlgym-ppo/learner.py` and look at the constructor (`def __init__(...`).
-
 ⚠️ *Many of the settings set in `example.py` are bad, such as `ent_coef`. Please read about them and change them.*
+
+Note that only some of the learner settings are being set here. To see all settings, go to [rlgym-ppo/learner.py](https://github.com/AechPro/rlgym-ppo/blob/main/rlgym_ppo/learner.py) and look at the constructor (`def __init__(...`).
 
 ___
 `n_proc`: To make learning faster, multiple games are run simultaneously, each in its own Python process. This number controls how many Python processes are launched. I recommend increasing this number until you have max CPU usage, to get the best possible steps/second (you can check in Task Manager on Windows).
