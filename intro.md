@@ -1,19 +1,3 @@
-# Introduction Making your first Rocket League ML bot using RLGym-PPO
-
-This guide will explain how to get started with RLGym-PPO, a very nice and easy-to-use learning framework for making Rocket League bots. I will explain what all of the settings in `example.py` do, and various recommendations.
-
-*DISCLAIMER: The recommendations I will give are based on of my personal experience, as well as what I have learned from talking to and reading the code of other bot creators. I am definitely no expert, and my experience is limited to just a few bots, so some things might not apply as well to yours. Experiment and see what works best! That's usually the only way to actually know.*
-
-*If you notice a mistake in this guide, let me know!*
-
-## Prerequisites
-This guide assumes you have some basic Python experience. If you are coming from another language, that's fine too, but you might need to google some basic stuff and watch a few tutorials along the way.
-I won't hand-hold basic Python tasks like adding an import or making a function, nor will I explain what an argument or constructor is. If you don't know, google it!
-
-This guide also assumes you know the basics of Rocket League. If you don't know what Rocket League is, I have no idea how you got here.
-
-You don't need any prior experience in machine learning, and this guide will assume you don't. If you already know some of the things I will explain, feel free to skip ahead.
-
 # Introduction
 
 ## Installing RLGym-PPO and rlgym-sim:
