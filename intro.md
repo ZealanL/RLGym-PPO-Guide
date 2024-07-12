@@ -12,7 +12,8 @@ Here are the steps to install everything needed:
 7. Install PyTorch from [its website](https://pytorch.org/get-started/locally/) (if you installed CUDA, select the CUDA version, otherwise select CPU)
 8. Make a folder for your bot, and move/open a command prompt to that folder
 9. Install RLGym-PPO with `pip install git+https://github.com/AechPro/rlgym-ppo`
-10. Clone RLGym-PPO to your bot folder with `git clone https://github.com/AechPro/rlgym-ppo.git`
+10. Steal [example.py](https://github.com/AechPro/rlgym-ppo/blob/main/example.py) from RLGym-PPO and add it to your bot folder
+11. Move `collision_meshes` to your bot folder
 
 ### Wait, where is Rocket League involved?
 RLGym-PPO uses rlgym-sim, which is a version of RLGym that runs on a simulated version of Rocket League, without actually running the game itself. This means that you can use RLGym-PPO on non-windows platforms, without having Rocket League, and can also collect data from the game much faster.
