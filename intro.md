@@ -10,7 +10,7 @@ Here are the steps to install everything needed:
 5. [Download the asset dumper](https://github.com/ZealanL/RLArenaCollisionDumper/releases/tag/v1.0.0) and [follow its usage instructions](https://github.com/ZealanL/RLArenaCollisionDumper/blob/main/README.md) to make the `collision_meshes` folder (we will move this later)
 6. If you have an NVIDIA GPU, install [CUDA v11.8](https://developer.nvidia.com/cuda-11-8-0-download-archive)
 7. Install PyTorch from [its website](https://pytorch.org/get-started/locally/) (if you installed CUDA, select the CUDA version, otherwise select CPU)
-8. Make a folder for your bot, and move/open a command prompt to that folder
+8. Make a folder for your bot
 9. Install RLGym-PPO with `pip install git+https://github.com/AechPro/rlgym-ppo`
 10. Steal [example.py](https://github.com/AechPro/rlgym-ppo/blob/main/example.py) from RLGym-PPO and add it to your bot folder
 11. Move `collision_meshes` to your bot folder
