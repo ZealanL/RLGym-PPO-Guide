@@ -1,14 +1,24 @@
 # Introduction
 
 ## Installing RLGym-PPO and rlgym-sim:
-Follow the instructions on https://github.com/AechPro/rlgym-ppo/blob/main/README.md.
-If you have an NVIDIA GPU, you should definitely install PyTorch with GPU support, because it will greatly speed up training.
+Here are the steps to install everything needed:
+*Skip a step if you already have the thing!*
+1. Install [Python](https://www.python.org/downloads/) (make sure to add it to your PATH/environment variables)
+2. Install [Git](https://git-scm.com/downloads) (you can just click through the install with all of the default settings)
+3. Install the `RocketSim` package with `pip install rocketsim`
+4. Install the `rlgym_sim` package with `pip install git+https://github.com/AechPro/rocket-league-gym-sim@main`
+5. [Download the asset dumper](https://github.com/ZealanL/RLArenaCollisionDumper/releases/tag/v1.0.0) and [follow its usage instructions](https://github.com/ZealanL/RLArenaCollisionDumper/blob/main/README.md) to make the `collision_meshes` folder (we will move this later)
+6. If you have an NVIDIA GPU, install [CUDA v11.8](https://developer.nvidia.com/cuda-11-8-0-download-archive)
+7. Install PyTorch from [its website](https://pytorch.org/get-started/locally/) (if you installed CUDA, select the CUDA version, otherwise select CPU)
+8. Make a folder for your bot, and move/open a command prompt to that folder
+9. Install RLGym-PPO with `pip install git+https://github.com/AechPro/rlgym-ppo`
+10. Clone RLGym-PPO to your bot folder with `git clone https://github.com/AechPro/rlgym-ppo.git`
 
-### Wait where is Rocket League involved?
+### Wait, where is Rocket League involved?
 RLGym-PPO uses rlgym-sim, which is a version of RLGym that runs on a simulated version of Rocket League, without actually running the game itself. This means that you can use RLGym-PPO on non-windows platforms, without having Rocket League, and can also collect data from the game much faster.
 
 ## Actually running your bot
-Once you have installed RLGym-PPO, you can run your bot by running `example.py`.
+Once you have installed RLGym-PPO, you can run your bot by running `example.py` (you should do this through a command prompt, instead of double-clicking).
 
 This will start training the bot, and will report its results to *wandb*, a data platform that you can use to see graphs of various info as your bot trains. It will also print out a big list of stuff into the console, which I will elaborate on more in the next section.
 
