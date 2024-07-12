@@ -2,7 +2,15 @@
 
 Next, we will cover most of the settings for the `Learner`. The `Learner` is a Python class that runs all of the learning loop, and it has many settings for all sorts of things related to the learning process.
 
-Some of these settings are already being overridden in `example.py`, but many of them are not. To see all of them, open up `rlgym-ppo/learner.py` and look at the constructor (`def __init__(...`).
+Learner settings are set in the `Learner` constructor in `example.py`.
+```py
+learner = Learner(build_rocketsim_env,
+                  n_proc=n_proc,
+                  min_inference_size=min_inference_size,
+                  metrics_logger=metrics_logger,
+                  ...
+```
+Note that only some of the learner settings are being set here. To see all settings, open up `rlgym-ppo/learner.py` and look at the constructor (`def __init__(...`).
 
 ⚠️ *Many of the settings set in `example.py` are bad, such as `ent_coef`. Please read about them and change them.*
 
