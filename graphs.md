@@ -60,3 +60,6 @@ These scale with the change in the policy each iteration (see "Policy Update Mag
 Many bot creators will adjust learning rate to keep one of these graphs near a certain value (I usually see people targeting ~0.08 as their clip fraction).
 
 ### *TODO: Add more graphs!*
+
+_____
+[Back to Table of Contents](README.md)

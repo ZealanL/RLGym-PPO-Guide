@@ -236,3 +236,6 @@ In these later stages, it is more important to allow the bot to slowly explore a
 Sometimes, you will see no changes on the graphs, but that often means it is slowly improving at everything instead of changing how it plays.
 
 A good amount of patience is required to get a high-level bot.
+
+_____
+[Back to Table of Contents](README.md)

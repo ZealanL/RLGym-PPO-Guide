@@ -98,3 +98,4 @@ A neat little Python line for getting the name of the most recent checkpoint in 
 latest_checkpoint_dir = "data/checkpoints/rlgym-ppo-run/" + str(max(os.listdir("data/checkpoints/rlgym-ppo-run"), key=lambda d: int(d)))
 ````
 ___	
+[Back to Table of Contents](README.md)

@@ -243,7 +243,5 @@ avg_opp_reward = ... # Average reward of all opponents
 # After that, we then just subtract the average opponent reward
 player_reward = (self_reward * (1 - team_spirit)) + (avg_team_reward * team_spirit) - average_opp_reward
 ```
-
-__
-
-### *TODO: Add sections explaining more complex rewards, explain returns, etc.*
+_____
+[Back to Table of Contents](README.md)

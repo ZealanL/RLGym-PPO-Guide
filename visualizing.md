@@ -19,7 +19,6 @@ There are multiple visualizers to choose from, the default one is VirxEC's https
 Virx's visualizer can sometimes be troublesome to set up, so I wrote my own visualizer with the goal of being as easy to use as possible.
 You can find it, along with how to connect it to RLGym-PPO/`rlgym_sim`, here: https://github.com/ZealanL/RocketSimVis
 
-
 ## Adjusting render delay
 
 Render delay is the time between sending states to the renderer.
@@ -37,3 +36,6 @@ To determine the render delay for normal speed, you should use the knowledge tha
 I recommend defining a constant for `TICK_SKIP`, and another constant called `STEP_TIME`, which is the time between steps, written in terms of `TICK_SKIP`.
 
 This constant will also be useful when tracking time in rewards and terminal conditions and such.
+
+_____
+[Back to Table of Contents](README.md)
