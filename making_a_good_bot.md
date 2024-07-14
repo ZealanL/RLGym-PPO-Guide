@@ -39,7 +39,7 @@ rewards = (
 	(EventReward(touch=1), 50), # Giant reward for actually hitting the ball
 	(SpeedTowardBallReward(), 5), # Move towards the ball!
 	(FaceBallReward(), 1), # Make sure we don't start driving backward at the ball
-	(AirReward(), 1) # Make sure we don't forget how to jump
+	(AirReward(), 0.15) # Make sure we don't forget how to jump
 )
 # NOTE: SpeedTowardBallReward and AirReward can be found in the rewards section of this guide
 ```
