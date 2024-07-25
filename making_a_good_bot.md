@@ -65,7 +65,7 @@ I recommend using `VelocityBallToGoalReward` as the continuous scoring encourage
 Many people are inclined to add a goal reward with massive weight to the bot, like this:
 ```py
 reward = (
-	(EventReward(team_goal=1, concede=-1), 100),
+	(EventReward(team_goal=1, concede=-1), 1000),
 	(VelocityBallToGoalReward(), 2),
 	(SpeedTowardBallReward(), 1),
 	(FaceBallReward(), 0.1),
@@ -78,7 +78,7 @@ reward = (
 This *feels* like it makes sense because goals are the most important thing in the game.
 However, from my testing and experience, adding massive goal rewards early on in training simply slows down learning and decreases exploration.
 
-A giant goal reward will drown out every other reward you have. Pick a more reasonable weight like `20`, in this instance.
+A giant goal reward will drown out every other reward you have. Pick a more reasonable weight like `50`, in this instance.
 
 I have trained a bot to element level without the use of any goal rewards. It is less important than you might expect.
 
@@ -132,7 +132,7 @@ reward = min(air_time_frac, height_frac)
 
 ### Get boost, and don't waste it this time!
 
-Bots will sort of discover picking up boost if given enough time, but are generally pretty wasteful once they have it.
+Bots will discover picking up boost with a basic event reward, but are generally pretty wasteful once they have it.
 
 I always recommend a general `SaveBoostReward`, which rewards the player based on how much boost they have.
 ```py
@@ -179,7 +179,7 @@ So, if your rewards are farmable in a way that does not improve your bot's skill
 ### Objectively measuring improvement
 
 The bot training framework [rocket-learn](https://github.com/Rolv-Arild/rocket-learn) uses an ELO-like rating system to track the skill of the bot against previous versions, 
-so you can actually measure how much the bot is improving. I do plan on implementing such a system for rlgym-ppo in both C++ and Python, but I haven't gotten around to it yet.
+so you can actually measure how much the bot is improving. There is also an ELO system in https://github.com/ZealanL/RLGymPPO_CPP.
 
 If you want to manually test improvement, you can verse your current bot against an older version and see who comes out on top. 
 If you are doing this in RLBot, you will have to wait a while, as it takes many goals to actually begin to know if the bot is improving.
@@ -219,16 +219,19 @@ I believe there are two main reasons why passiveness is so natural for bots:
 Personally, I am not a fan of passiveness in bots. In all of my bots I have taken many steps to encourage and promote riskier, more aggressive play.
 This allowed my bots to discover much stronger plays and defense as a result.
 
-But *how* do you promote aggression? My most general solution to this problem is to **just decrease the concede penalty**.
-It seems like basic logic that your reward for conceding (getting scored on) should just be the goal reward negative. After all, getting scored on is just as bad as scoring is good.
-However, as you may have already learned, just because something is theoretically correct doesn't mean it is optimal for training bots.
+But *how* do you promote aggression?
+I usually combine these 3 elements to promote general aggression:
+- Add strong zero-sum rewards for possession, which become more valuable the closer to enemy's goal
+- Add a penalty to punish a team when an opponent shoots, flicks, or dribbles
+- Decrease concede penalty to ~20% lower than goal reward
 
-I introduce what I call `aggression_bias`, which is the portion of the concede penalty that is removed to promote aggression. 
-At `aggression_bias = 0.25`, the penalty for conceding is 25% less than the reward for scoring.
-You can define the concede reward using `aggression_bias` like so: `concede_reward = -goal_reward * (1 - aggression_bias)`.
+This combination seems to work pretty well, but what exactly is needed depends a lot on how your bot plays.
 
-I generally use an `aggression_bias` of around `0.2` in my bots, but I frequently change it depending on how aggressive the bot is playing.
-If the `aggression_bias` isn't enough, you may want to add strong rewards for challenging a play, and a penalty for there being no player on a given team near the ball.
+## Training momentum
+There seems to exist a sort of "momentum" for learning. If you train from the beginning with the same rewards (after the early stages), the bot will maintain momentum in its overall progress.
+If you frequently make drastic changes to the rewards, however, the bot's learning will slow down a lot, and over time it will stop being as responsive to reward changes.
+
+Keep this in mind, because sometimes restarting can lead to quicker improvement long-term than trying to force an old, weathered bot to learn new tricks.
 
 ## Letting it cook
 
