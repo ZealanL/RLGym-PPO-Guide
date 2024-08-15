@@ -187,26 +187,6 @@ If you are doing this in RLBot, you will have to wait a while, as it takes many 
 For my first rlgym-ppo bot I wrote a little Python script that used rlgym-sim to run an infinite game between two versions of my bot. 
 This could run far faster than real-time (unlike RLBot) so I was quickly able to see if the bot was actually improving as the scoreline rapidly climbed.
 
-### GAE Gamma
-
-Gamma is a parameter found in the learner settings, called `gae_gamma`.
-This is a parameter of the General Advantage Estimator (GAE). 
-
-Gamma is responsible for making the bot seek future rewards, instead of just current ones.
-The gamma value ranges from 0-1, where 0 gamma ignores future rewards, and 1 gamma makes future rewards just as strong as current ones.
-Gamma acts on future rewards every step, so tick skip is very relevant when choosing a good gamma.
-
-The default is `0.99`, which is actually sort of low for gamma, as future rewards will lose half of their value in under 5 seconds (assuming you are on 8 tick skip).
-Low gamma is fine for early/middle stages, but I recommend increasing it once your bot is in the later stages.
-
-I have made an interactable graph where you can visualize and play around with gamma [here](https://www.desmos.com/calculator/oxplhwmy89).
-The vertical line is the half-life, which is how long until a future reward loses half its value. 
-Once your bot is in later stages, I recommend using a gamma that has a half-life of around 15 seconds.
-This means a goal reward in 15 seconds is half as valuable to the bot as a goal right now.
-
-Note that too-high gamma will make it more difficult for your bot to identify and learn rewards.
-Higher gamma also makes the critic's job much harder, and tends to slow training in general.
-
 ### Natural Dribbling and Flicking
 
 Dribbling and flicking will often be discovered in most bots with basic rewards, even without any reward for dribbling or flicking.
@@ -239,6 +219,26 @@ I usually combine these 3 elements to promote general aggression:
 - Decrease concede penalty to ~20% lower than goal reward
 
 This combination seems to work pretty well, but what exactly is needed depends a lot on how your bot plays.
+
+## GAE Gamma
+
+Gamma is a parameter found in the learner settings, called `gae_gamma`.
+This is a parameter of the General Advantage Estimator (GAE). 
+
+Gamma is responsible for making the bot seek future rewards, instead of just current ones.
+The gamma value ranges from 0-1, where 0 gamma ignores future rewards, and 1 gamma makes future rewards just as strong as current ones.
+Gamma acts on future rewards every step, so tick skip is very relevant when choosing a good gamma.
+
+The default is `0.99`, which is actually sort of low for gamma, as future rewards will lose half of their value in under 5 seconds (assuming you are on 8 tick skip).
+Low gamma is fine for early/middle stages, but I recommend increasing it once your bot is in the later stages.
+
+I have made an interactable graph where you can visualize and play around with gamma [here](https://www.desmos.com/calculator/oxplhwmy89).
+The vertical line is the half-life, which is how long until a future reward loses half its value. 
+Once your bot is in later stages, I recommend using a gamma that has a half-life of around 15 seconds.
+This means a goal reward in 15 seconds is half as valuable to the bot as a goal right now.
+
+Note that too-high gamma will make it more difficult for your bot to identify and learn rewards.
+Higher gamma also makes the critic's job much harder, and tends to slow training in general.
 
 ## Training momentum
 There seems to exist a sort of "momentum" for learning. If you train from the beginning with the same rewards (after the early stages), the bot will maintain momentum in its overall progress.
