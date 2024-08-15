@@ -38,3 +38,5 @@ _____
 [Understanding The Graphs](graphs.md) <- *What the metric graphs mean*
 
 [Making a Good Bot](making_a_good_bot.md) <- *How to make a bot that is actually good*
+
+[My Bot Stopped Improving!](my_bot_stopped_improving.md) <- *Troubleshooting bots that won't improve*

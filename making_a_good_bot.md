@@ -187,16 +187,29 @@ If you are doing this in RLBot, you will have to wait a while, as it takes many 
 For my first rlgym-ppo bot I wrote a little Python script that used rlgym-sim to run an infinite game between two versions of my bot. 
 This could run far faster than real-time (unlike RLBot) so I was quickly able to see if the bot was actually improving as the scoreline rapidly climbed.
 
-## Nextoification
+### GAE Gamma
 
-Nexto mostly used very general and gentle rewards, and while there was definitely some deliberate influence on playstyle and mechanics, such as aerials, its a good example of how bots *want* to play.
+Gamma is a parameter found in the learner settings, called `gae_gamma`.
+This is a parameter of the General Advantage Estimator (GAE). 
 
-Generally, the less specifically you reward your bot, the more its playstyle will resemble Nexto. 
-Nexto's passive dribble-flick playstyle with mostly forward flicks seems to be a natural evolution of basic ballchasing behavior.
+Gamma is responsible for making the bot seek future rewards, instead of just current ones.
+The gamma value ranges from 0-1, where 0 gamma ignores future rewards, and 1 gamma makes future rewards just as strong as current ones.
+Gamma acts on future rewards every step, so tick skip is very relevant when choosing a good gamma.
+
+The default is `0.99`, which is actually sort of low for gamma, as future rewards will lose half of their value in under 5 seconds (assuming you are on 8 tick skip).
+Low gamma is fine for early/middle stages, but I recommend increasing it once your bot is in the later stages.
+
+I have made an interactable graph where you can visualize and play around with gamma [here](https://www.desmos.com/calculator/oxplhwmy89).
+The vertical line is the half-life, which is how long until a future reward loses half its value. 
+Once your bot is in later stages, I recommend using a gamma that has a half-life of around 15 seconds.
+This means a goal reward in 15 seconds is half as valuable to the bot as a goal right now.
+
+Note that too-high gamma will make it more difficult for your bot to identify and learn rewards.
+Higher gamma also makes the critic's job much harder, and tends to slow training in general.
 
 ### Natural Dribbling and Flicking
 
-Dribbling and flicking will generally be discovered in most bots with basic rewards, even without any reward for dribbling or flicking.
+Dribbling and flicking will often be discovered in most bots with basic rewards, even without any reward for dribbling or flicking.
 
 Almost all bots have a far faster reaction time than humans. Nexto, with a `tick_skip` of `8`, can react to something in as little as 67 milliseconds--whereas humans take around 200-300ms.
 This makes dribbling far easier, as the bot just has to react to the ball falling off the edge of its car by accelerating or turning that way, instead of having to predict how the ball will move.
@@ -214,7 +227,7 @@ This is a flaw you will notice with most bots. They are unwilling to take risks 
 
 I believe there are two main reasons why passiveness is so natural for bots:
 1. Having a faster reaction time makes being passive more viable (you can react faster to threats)
-2. It is simply easier to be passive than to be aggressive because being aggressive requires more predictive decision-making
+2. It is simply easier to be passive than to be aggressive, because being aggressive requires more predictive decision-making
 
 Personally, I am not a fan of passiveness in bots. In all of my bots I have taken many steps to encourage and promote riskier, more aggressive play.
 This allowed my bots to discover much stronger plays and defense as a result.
