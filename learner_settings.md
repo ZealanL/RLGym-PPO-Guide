@@ -10,7 +10,7 @@ learner = Learner(build_rocketsim_env,
                   metrics_logger=metrics_logger,
                   ...
 ```
-⚠️ *Many of the settings set in `example.py` are bad, such as `ent_coef`. Please read about them and change them.*
+⚠️ *Many of the settings set in `example.py` are bad, such as `ppo_ent_coef`. Please read about them and change them.*
 
 Note that only some of the learner settings are being set here. To see all settings, go to [rlgym-ppo/learner.py](https://github.com/AechPro/rlgym-ppo/blob/main/rlgym_ppo/learner.py) and look at the constructor (`def __init__(...`).
 
@@ -61,7 +61,7 @@ ___
 
 If you aren't using a GPU, this isn't as important. I have no clue what the optimal value is for CPU learning. I'd guess something very big (RAM is usually bigger than VRAM), or something quite small (CPU cache size).
 ___
-`ent_coef`: This is the scale factor for entropy. Entropy fights against learning to make your bot pick actions more randomly. This is useful because it forces the bot to try a larger variety of actions in all situations, which leads to better exploration.
+`ppo_ent_coef`: This is the scale factor for entropy. Entropy fights against learning to make your bot pick actions more randomly. This is useful because it forces the bot to try a larger variety of actions in all situations, which leads to better exploration.
 
 The golden value for this seems to be about `0.01`. 
 You can reduce this significantly to cause your bot to stop exploring the game and start refining what it already knows. Don't do this if you plan to continue training your bot after.
