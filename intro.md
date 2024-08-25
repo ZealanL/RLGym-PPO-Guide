@@ -125,13 +125,12 @@ An **action** is the combination of controller inputs the bot presses (throttle,
 Most bots use a **discrete action** parser, which separates every useful permutation of inputs into their own box, and the bot can control the car by picking a specific box of inputs.
 
 Now before you go ahead and swap out `ContinuousAction` with `DiscreteAction`, beware:
-`DiscreteAction` is actually `MultiDiscrete`, which is not what I described.
+`DiscreteAction` is actually multi-discrete, which is not what I described.
 The fully-discrete[*] action parser is called `LookupAction`, and is not included by the library by default.
 
 You can find it here: https://github.com/RLGym/rlgym-tools/blob/main/rlgym_tools/extra_action_parsers/lookup_act.py
 
 Since action parsers define how your bot controls the car, changing it usually means resetting the bot.
-
 
 ### Rewards and weights
 
