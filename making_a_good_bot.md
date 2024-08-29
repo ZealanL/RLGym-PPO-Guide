@@ -35,7 +35,7 @@ Doubling the jump actions seems to be enough to eliminate the need for air rewar
 From my testing, here are some good rewards to get a fresh bot to learn to hit the ball as quickly as possible.
 ```py
 // Format: (reward, weight)
-rewards = (
+rewards = CombinedReward.from_zipped(
 	(EventReward(touch=1), 50), # Giant reward for actually hitting the ball
 	(SpeedTowardBallReward(), 5), # Move towards the ball!
 	(FaceBallReward(), 1), # Make sure we don't start driving backward at the ball
